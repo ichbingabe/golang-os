@@ -5,6 +5,8 @@ import (
 	"log"
 )
 
+var Path string
+
 func Mkdir(name string) {
 	err := os.Mkdir(name, 0750)
 	if err != nil && os.IsExist(err){
@@ -12,13 +14,22 @@ func Mkdir(name string) {
 	}
 }
 
-func PythonScript(name string) {
-	path := name + "/test.py"
+func PythonScript() {
+	Path = Name + "/test.py"
 	str := 
-	`def test():
+`def test():
 	abc = "testing"
-	print(abc)`
-	err := os.WriteFile(path, []byte(str), 0660)
+	print(abc)
+
+test()
+abc = "test2 funcionando perfeitamente"
+def test2(abc):
+	res = abc
+	print(res)
+	
+test2(abc)`
+	
+err := os.WriteFile(Path, []byte(str), 0660)
 	if err != nil {
 		log.Fatal(err)
 	} 
