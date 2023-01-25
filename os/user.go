@@ -12,13 +12,19 @@ type User struct {
 	Id uint `json:"id,omitempty"`
 } 
 
-func Marshal(name string, lastNAme string, email string, id uint) (error, []byte){
-	user := &User{Name: name, LastName: lastNAme, Email: email, Id: id}
+func marshal(usr UserArray) (error, []byte){
+	user := usr
+
 	b, err := json.Marshal(user)
+		
 	if err != nil {
 		fmt.Println(err)
 		return err, b
 	}
+
+
 	fmt.Println(string(b))
-	return err, b 
+
+	return err, b
+	
 }
