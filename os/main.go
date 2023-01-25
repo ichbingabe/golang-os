@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"fmt"
+	"encoding/csv"
 )
 
 var Name string
@@ -21,8 +22,8 @@ func main() {
 //	Mkdir(Name)
 //	PythonScript()
 	user1 := User{
-		Name: "a",
-		LastName: "las",
+		Name: "",
+		LastName: "asdf",
 		Email: "email",
 		Id: 1,
 	}
@@ -41,8 +42,8 @@ func main() {
 		Id: 3,
 	}
 
-	userArray := []User{user1, user2, user3}
-	usr := UserArray{userArray}
+	UserArr := []User{user1, user2, user3}
+	usr := UserArray{UserArr}
 
 	//fmt.Printf("User %v\\n", usr)
 	_, b := marshal(usr) 
@@ -59,5 +60,22 @@ func main() {
 	cmd = exec.Command("python3", "bash/test.py")
 	if err := cmd.Run(); err != nil {
 		fmt.Println("error: ", err)
+	}
+
+
+	file, err := os.Create("testdir/output.csv")
+	defer file.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w := csv.NewWriter(file)
+	defer w.Flush()
+
+	for _, user := range UserArr {
+		row := []string{user.Email, user.Name, user.LastName}
+		if err := w.Write(row); err != nil{
+			log.Fatal(err)
+		}
 	}
 }
